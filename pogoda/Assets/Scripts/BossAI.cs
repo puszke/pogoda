@@ -17,7 +17,7 @@ public class BossAI : MonoBehaviour
 
     private bool firstEncounter = true;
 
-    [SerializeField] private GameObject piorun;
+    [SerializeField] private GameObject piorun, komarObj;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -70,10 +70,20 @@ public class BossAI : MonoBehaviour
         }
         if(distance>6*minDistanceToPlayer && !charge) 
         {
-            animator.SetTrigger("FarAttack");
+            if (BossHealth.instance.secondPhase)
+                StartCoroutine(komar());
+            else
+                animator.SetTrigger("FarAttack");
             minDistanceToPlayer += 2;
             StartCoroutine(SpawnPiorun());
         }
+    }
+
+    IEnumerator komar()
+    {
+        animator.SetTrigger("Komar");
+        yield return new WaitForSeconds(0.4f);
+        GameObject newKomar = Instantiate(komarObj, transform.position, Quaternion.identity);
     }
 
     IEnumerator SpawnPiorun()
