@@ -16,6 +16,6 @@ public class UMB : MonoBehaviour
     void Update()
     {
         transform.position = Vector3.Lerp(transform.position, pivot.position, moveToPivot*Time.deltaTime);
-        transform.rotation = pivot.rotation;
+        transform.rotation = pivot.GetChild(0).rotation;
     }
 }

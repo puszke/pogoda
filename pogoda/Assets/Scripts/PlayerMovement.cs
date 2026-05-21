@@ -44,6 +44,10 @@ public class PlayerMovement : MonoBehaviour
         {
             characterController.Move((transform.forward * y + transform.right * x) * speed * Time.deltaTime);
         }
+        if(dodging && alive)
+        {
+            characterController.Move((transform.forward * y + transform.right * x) * speed * 4 * Time.deltaTime);
+        }
         Gravity();
     }
     // Update is called once per frame
@@ -101,7 +105,7 @@ public class PlayerMovement : MonoBehaviour
     }
     IEnumerator dodge()
     {
-        int i = 0;
+        /*int i = 0;
         float prevSpeed = speed;
         source.PlayOneShot(jump);
         while (i < 10)
@@ -115,11 +119,11 @@ public class PlayerMovement : MonoBehaviour
                     Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, 30, 40 * Time.deltaTime);
             }
             characterController.Move((transform.forward * y + transform.right * x) * speed * Time.deltaTime);
-            yield return new WaitForSeconds(0.01f);
             i++;
            
-        }
+        }*/
+        yield return new WaitForSeconds(0.2f);
         dodging = false;
-        speed = prevSpeed;  
+        //speed = prevSpeed;  
     }
 }

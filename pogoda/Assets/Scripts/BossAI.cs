@@ -13,7 +13,7 @@ public class BossAI : MonoBehaviour
 
     public Animator animator;
 
-    private bool charge=false;
+    private bool charge=false, komarrzut=false;
 
     private bool firstEncounter = true;
 
@@ -25,6 +25,7 @@ public class BossAI : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         player = GameObject.FindWithTag("Player");
         RandomDistance();
+        
     }
 
     void RandomDistance()
@@ -70,20 +71,25 @@ public class BossAI : MonoBehaviour
         }
         if(distance>6*minDistanceToPlayer && !charge) 
         {
-            if (BossHealth.instance.secondPhase)
+            if (BossHealth.instance.secondPhase && !komarrzut)
                 StartCoroutine(komar());
             else
+            {
                 animator.SetTrigger("FarAttack");
-            minDistanceToPlayer += 2;
-            StartCoroutine(SpawnPiorun());
+                minDistanceToPlayer += 2;
+                StartCoroutine(SpawnPiorun());
+            }
         }
     }
 
     IEnumerator komar()
     {
+        komarrzut = true;
         animator.SetTrigger("Komar");
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(1);
         GameObject newKomar = Instantiate(komarObj, transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(3);
+        komarrzut = false;
     }
 
     IEnumerator SpawnPiorun()

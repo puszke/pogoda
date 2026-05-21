@@ -10,6 +10,8 @@ public class BossHealth : MonoBehaviour
 
     public static BossHealth instance;
 
+
+    public AudioSource source;
     private void Awake()
     {
         instance = this; 
@@ -17,6 +19,7 @@ public class BossHealth : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        source = GetComponent<AudioSource>();
         startingHp = bossHP;
     }
     private void OnCollisionEnter(Collision collision)
@@ -24,8 +27,11 @@ public class BossHealth : MonoBehaviour
         Debug.Log(collision.transform.tag);
         if(collision.transform.tag=="umb")
         {
+            source.Play();
+            source.pitch = Random.Range(0.5f, 1.3f);
             bossHP -= manager.damage;
             TimeManager.instance.slowmo();
+
         }
 
         if(bossHP<=startingHp/2)
