@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,13 +16,20 @@ public class PlayerMovement : MonoBehaviour
 
     public bool dodging=false, jumping=false;
 
+    public AudioSource source;
+
     float x, y;
 
     [SerializeField]
     float grav = 0;
 
+
+    public AudioClip jump;
+    public List<AudioClip> attacks;
+
     private void Awake()
     {
+        source = GetComponent<AudioSource>();
         characterController = GetComponent<CharacterController>();
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -95,6 +103,7 @@ public class PlayerMovement : MonoBehaviour
     {
         int i = 0;
         float prevSpeed = speed;
+        source.PlayOneShot(jump);
         while (i < 10)
         {
             speed = dodgeDistance*50;

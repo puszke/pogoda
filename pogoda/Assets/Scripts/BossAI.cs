@@ -15,6 +15,8 @@ public class BossAI : MonoBehaviour
 
     private bool charge=false;
 
+    private bool firstEncounter = true;
+
     [SerializeField] private GameObject piorun;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -30,6 +32,15 @@ public class BossAI : MonoBehaviour
         minDistanceToPlayer = Random.Range(1, 5);
     }
     
+    IEnumerator waitForKill()
+    {
+        yield return new WaitForSeconds(1);
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        if (distance < 1 && charge)
+        {
+            player.GetComponent<PlayerMovement>().alive = false;
+        }
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -39,10 +50,10 @@ public class BossAI : MonoBehaviour
 
         if(distance<2f && charge)
         {
-            player.GetComponent<PlayerMovement>().alive = false;
+            StartCoroutine(waitForKill());
         }
 
-        if(distance>minDistanceToPlayer)
+        if(distance>minDistanceToPlayer && !firstEncounter)
         {
             rb.AddForce(transform.forward*moveSpeed*Time.deltaTime, ForceMode.Impulse);  
         }
@@ -50,6 +61,7 @@ public class BossAI : MonoBehaviour
         {
             if (!charge)
             {
+                firstEncounter = false;
                 animator.SetTrigger("Charge");
                 StartCoroutine(Charge());
                 charge = true;

@@ -16,5 +16,9 @@ public class BossHealthUI : MonoBehaviour
     {
         ui1.fillAmount = health.bossHP / 23000;
         ui2.fillAmount = Mathf.Lerp(ui2.fillAmount, ui1.fillAmount, 10*Time.deltaTime);
+        if(BossHealth.instance.secondPhase)
+        {
+            ui1.color = Color.white;
+        }
     }
 }
