@@ -107,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
     {
         /*int i = 0;
         float prevSpeed = speed;
-        source.PlayOneShot(jump);
+        
         while (i < 10)
         {
             speed = dodgeDistance*50;
@@ -122,6 +122,7 @@ public class PlayerMovement : MonoBehaviour
             i++;
            
         }*/
+        source.PlayOneShot(jump);
         yield return new WaitForSeconds(0.2f);
         dodging = false;
         //speed = prevSpeed;  
