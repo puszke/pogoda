@@ -12,6 +12,8 @@ public class BossHealth : MonoBehaviour
 
 
     public AudioSource source;
+
+    public Material bcg;
     private void Awake()
     {
         instance = this; 
@@ -34,14 +36,15 @@ public class BossHealth : MonoBehaviour
 
         }
 
-        if(bossHP<=startingHp/2)
-        {
-            secondPhase = true;
-        }
+        
     }
     // Update is called once per frame
     void Update()
     {
-        
+        if (bossHP <= startingHp / 2)
+        {
+            secondPhase = true;
+            RenderSettings.skybox = bcg;
+        }
     }
 }

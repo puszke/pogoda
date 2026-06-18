@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public bool alive = true;
     public float speed = 5;
+    public float maxSpeed = 5;
     public float dodgeDistance = 10;
 
     [SerializeField]
@@ -53,6 +54,15 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PlayerPrefs.GetString("weapon") == "big")
+        {
+            speed = 10;
+        }
+        if (PlayerPrefs.GetString("weapon")=="small")
+        {
+            speed = 20;
+        }
+
         x = Input.GetAxisRaw("Horizontal");
         y = Input.GetAxisRaw("Vertical");
         DeathScreen.SetActive(!alive);
